@@ -26,6 +26,7 @@ import {
   XCircleIcon as XCircleIconOutline,
   XMarkIcon as XIconOutline,
   MoonIcon as MoonIconOutline,
+  TruckIcon as TruckIconOutline,
 } from "@heroicons/react/24/outline";
 
 import {
@@ -55,6 +56,7 @@ import {
   XCircleIcon as XCircleIconSolid,
   XMarkIcon as XIconSolid,
   MoonIcon as MoonIconSolid,
+  TruckIcon as TruckIconSolid,
 } from "@heroicons/react/24/solid";
 
 export const icons = {
@@ -161,6 +163,10 @@ export const icons = {
   xCircle: {
     outline: XCircleIconOutline,
     solid: XCircleIconSolid,
+  },
+  truck: {
+    outline: TruckIconOutline,
+    solid: TruckIconSolid,
   },
 } as const;
 
