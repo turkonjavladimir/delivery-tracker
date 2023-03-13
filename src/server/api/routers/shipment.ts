@@ -3,7 +3,7 @@ import { z } from "zod";
 import { env } from "~/env.mjs";
 import { httpGet } from "~/server/utils/http-utils";
 import { Shipment, Shipments } from "~/components/models/shipment";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
 export const shipmentRouter = createTRPCRouter({
@@ -33,5 +33,30 @@ export const shipmentRouter = createTRPCRouter({
           cause: error,
         });
       }
+    }),
+  getAll: protectedProcedure.query(({ ctx }) => {
+    return ctx.prisma.shipment.findMany({
+      orderBy: {
+        estimatedDeliveryDate: "desc",
+      },
+    });
+  }),
+  create: protectedProcedure
+    .input(
+      z.object({
+        trackingNumber: z.string(),
+        status: z.string(),
+        estimatedDeliveryDate: z.string(),
+      })
+    )
+    .mutation(({ ctx, input }) => {
+      return ctx.prisma.shipment.create({
+        data: {
+          status: input.status,
+          trackingNumber: input.trackingNumber,
+          estimatedDeliveryDate: input.estimatedDeliveryDate,
+          userId: ctx.session.user.id,
+        },
+      });
     }),
 });
