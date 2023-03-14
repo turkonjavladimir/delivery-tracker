@@ -73,4 +73,5 @@ model Shipment {
     estimatedDeliveryDate String?
     userId                String?
     user                  User?   @relation(fields: [userId], references: [id])
+    archived              Boolean @default(false)
 }
