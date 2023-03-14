@@ -25,7 +25,7 @@ const Card = ({ title = "", trackingNumber = "", id }: CardProps) => {
 
   return (
     <Link href={`/track/${trackingNumber}`}>
-      <div className="relative mt-2 flex flex-col rounded-md bg-white p-3 shadow-sm transition-colors md:hover:bg-indigo-50">
+      <div className="mt-2 flex flex-col rounded-md bg-white p-3 shadow-sm transition-colors md:hover:bg-indigo-50">
         <div className="flex items-start justify-between">
           <div className="flex min-w-0 gap-3">
             <span className="h-14 w-14 rounded-md bg-indigo-100 p-2">
