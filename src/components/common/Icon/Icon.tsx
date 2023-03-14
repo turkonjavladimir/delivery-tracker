@@ -29,7 +29,8 @@ export type IconName =
   | "xCircle"
   | "x"
   | "moonIcon"
-  | "truck";
+  | "truck"
+  | "archiveBox";
 
 interface IconProps {
   name: IconName;

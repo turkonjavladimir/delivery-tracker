@@ -27,6 +27,7 @@ import {
   XMarkIcon as XIconOutline,
   MoonIcon as MoonIconOutline,
   TruckIcon as TruckIconOutline,
+  ArchiveBoxIcon as ArchiveBoxIconOutline,
 } from "@heroicons/react/24/outline";
 
 import {
@@ -57,6 +58,7 @@ import {
   XMarkIcon as XIconSolid,
   MoonIcon as MoonIconSolid,
   TruckIcon as TruckIconSolid,
+  ArchiveBoxIcon as ArchiveBoxIconSolid,
 } from "@heroicons/react/24/solid";
 
 export const icons = {
@@ -167,6 +169,10 @@ export const icons = {
   truck: {
     outline: TruckIconOutline,
     solid: TruckIconSolid,
+  },
+  archiveBox: {
+    outline: ArchiveBoxIconOutline,
+    solid: ArchiveBoxIconSolid,
   },
 } as const;
 
