@@ -29,9 +29,9 @@ const SearchInput = ({
           disabled={isDisabled}
           className={`${
             isDisabled && "opacity-30"
-          } inline-flex items-center rounded-r-md bg-indigo-200 py-2 px-4 transition-all hover:brightness-95 sm:text-sm`}
+          } inline-flex items-center rounded-r-md bg-indigo-500 py-2 px-4 transition-all hover:brightness-95 sm:text-sm`}
         >
-          <Icon name="magnifyingGlass" className="h-5 w-5 text-indigo-500" />
+          <Icon name="magnifyingGlass" className="h-5 w-5 text-indigo-100" />
         </button>
       </div>
     </div>
