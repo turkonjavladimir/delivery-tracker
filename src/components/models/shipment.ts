@@ -1,19 +1,29 @@
 import { z } from "zod";
 
-const address = z.object({
+const AddressModel = z.object({
   countryCode: z.string(),
   postalCode: z.string(),
   addressLocality: z.string(),
   streetAddress: z.string(),
 });
 
+const EventModel = z.object({
+  timestamp: z.string(),
+  description: z.string(),
+  location: z.object({
+    address: z.object({
+      addressLocality: z.string(),
+    }),
+  }),
+});
+
 const shipmentValidator = z.object({
   id: z.string(),
   origin: z.object({
-    address,
+    AddressModel,
   }),
   destination: z.object({
-    address,
+    AddressModel,
     servicePoint: z.object({
       label: z.string(),
       url: z.string().url(),
@@ -23,7 +33,7 @@ const shipmentValidator = z.object({
   status: z.object({
     description: z.string(),
     location: z.object({
-      address,
+      AddressModel,
     }),
     status: z.string(),
     statusCode: z.string(),
@@ -36,17 +46,7 @@ const shipmentValidator = z.object({
       organizationName: z.string(),
     }),
   }),
-  events: z.array(
-    z.object({
-      timestamp: z.string(),
-      description: z.string(),
-      location: z.object({
-        address: z.object({
-          addressLocality: z.string(),
-        }),
-      }),
-    })
-  ),
+  events: z.array(EventModel),
 });
 export type Shipment = z.infer<typeof shipmentValidator>;
 
