@@ -8,7 +8,7 @@ const LoadingSpinner = () => {
     <div role="status">
       <svg
         aria-hidden="true"
-        className="h-4 w-4 animate-spin fill-blue-600 text-gray-600 dark:text-gray-100"
+        className="h-4 w-4 animate-spin fill-blue-600 text-gray-400 dark:text-gray-100"
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +56,13 @@ export const MenuItem = ({
   );
 };
 
-const Dropdown = ({ children }: { children: React.ReactNode }) => {
+const Dropdown = ({
+  children,
+  customMenuButton,
+}: {
+  children: React.ReactNode;
+  customMenuButton?: React.ReactNode;
+}) => {
   if (!children) {
     return null;
   }
@@ -65,8 +71,14 @@ const Dropdown = ({ children }: { children: React.ReactNode }) => {
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="flex items-center rounded-full transition-colors hover:bg-gray-100 dark:hover:bg-neutral-600">
-          <span className="sr-only">Open options</span>
-          <Icon name="ellipsisHorizontal" className="h-5 w-5" />
+          {customMenuButton ? (
+            customMenuButton
+          ) : (
+            <>
+              <span className="sr-only">Open options</span>
+              <Icon name="ellipsisHorizontal" className="h-5 w-5" />
+            </>
+          )}
         </Menu.Button>
       </div>
 
