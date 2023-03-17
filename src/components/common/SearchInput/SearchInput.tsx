@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import { type InputHTMLAttributes } from "react";
 
 import Icon from "~/components/common/Icon";
 
@@ -27,9 +27,7 @@ const SearchInput = ({
         <button
           onClick={onClick}
           disabled={isDisabled}
-          className={`${
-            isDisabled && "opacity-30"
-          } inline-flex items-center rounded-r-md bg-indigo-500 py-2 px-4 transition-all hover:brightness-95 sm:text-sm`}
+          className={`inline-flex items-center rounded-r-md bg-indigo-500 py-2 px-4 transition-all hover:brightness-95 disabled:pointer-events-none disabled:bg-opacity-50 sm:text-sm`}
         >
           <Icon name="magnifyingGlass" className="h-5 w-5 text-indigo-100" />
         </button>
