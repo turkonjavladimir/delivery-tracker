@@ -74,4 +74,14 @@ model Shipment {
     userId                String?
     user                  User?   @relation(fields: [userId], references: [id])
     archived              Boolean @default(false)
+    events                Event[]
+}
+
+model Event {
+    id          String   @id @default(cuid())
+    description String
+    location    String
+    timestamp   String
+    shipmentId  String
+    shipment    Shipment @relation(fields: [shipmentId], references: [id], onDelete: Cascade)
 }
