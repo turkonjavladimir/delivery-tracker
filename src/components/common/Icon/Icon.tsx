@@ -30,7 +30,8 @@ export type IconName =
   | "x"
   | "moonIcon"
   | "truck"
-  | "archiveBox";
+  | "archiveBox"
+  | "arrowPath";
 
 interface IconProps {
   name: IconName;
