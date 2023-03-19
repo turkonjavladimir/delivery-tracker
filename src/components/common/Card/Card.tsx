@@ -7,12 +7,12 @@ import Icon from "~/components/common/Icon";
 import { MenuItem } from "~/components/ui/Dropdown/Dropdown";
 
 type CardProps = {
-  title: string;
-  trackingNumber: string;
-  id: string;
+  id?: string;
+  title?: string;
+  trackingNumber?: string;
 };
 
-const Card = ({ title = "", trackingNumber = "", id }: CardProps) => {
+const Card = ({ id, title = "", trackingNumber = "" }: CardProps) => {
   const { refetch } = api.shipment.getAll.useQuery();
 
   const deleteShipment = api.shipment.delete.useMutation({
@@ -24,7 +24,7 @@ const Card = ({ title = "", trackingNumber = "", id }: CardProps) => {
   const isDisabled = deleteShipment?.isLoading;
 
   return (
-    <Link href={`/track/${trackingNumber}`}>
+    <Link href={`/shipment/${id}`}>
       <div className="mt-2 flex flex-col rounded-md bg-white p-3 shadow-sm transition-colors md:hover:bg-indigo-50">
         <div className="flex items-start justify-between">
           <div className="flex min-w-0 gap-3">
@@ -32,12 +32,15 @@ const Card = ({ title = "", trackingNumber = "", id }: CardProps) => {
               <Icon name="truck" className="h-10 w-10 text-indigo-500" />
             </span>
 
-            <div className="flex min-w-0 flex-col">
-              <span className="text=[#27303D] truncate font-semibold uppercase">
+            <div className="flex w-full min-w-0 flex-col">
+              <div className="flex items-center gap-3">
+                <span className="text=[#27303D] truncate text-sm font-semibold uppercase">
+                  #{trackingNumber}
+                </span>
+              </div>
+
+              <span className="mt-2 truncate text-sm uppercase text-gray-400">
                 {title}
-              </span>
-              <span className="mt-2 text-sm uppercase text-gray-400">
-                {trackingNumber}
               </span>
             </div>
           </div>
@@ -48,7 +51,11 @@ const Card = ({ title = "", trackingNumber = "", id }: CardProps) => {
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  console.log("Delete");
+
+                  if (!id) {
+                    return;
+                  }
+
                   void deleteShipment.mutate({ id });
                 }}
                 text="Delete"
