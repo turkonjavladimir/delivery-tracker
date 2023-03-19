@@ -1,12 +1,5 @@
 import { z } from "zod";
 
-const AddressModel = z.object({
-  countryCode: z.string(),
-  postalCode: z.string(),
-  addressLocality: z.string(),
-  streetAddress: z.string(),
-});
-
 const EventModel = z.object({
   timestamp: z.string(),
   description: z.string(),
@@ -20,26 +13,27 @@ const EventModel = z.object({
 const shipmentValidator = z.object({
   id: z.string(),
   origin: z.object({
-    AddressModel,
-  }),
-  destination: z.object({
-    AddressModel,
-    servicePoint: z.object({
-      label: z.string(),
-      url: z.string().url(),
+    address: z.object({
+      addressLocality: z.string(),
     }),
   }),
-  service: z.string(),
+  destination: z.object({
+    address: z.object({
+      addressLocality: z.string(),
+    }),
+  }),
   status: z.object({
     description: z.string(),
     location: z.object({
-      AddressModel,
+      address: z.object({
+        addressLocality: z.string(),
+      }),
     }),
     status: z.string(),
     statusCode: z.string(),
-    remark: z.string(),
     timestamp: z.string(),
   }),
+  service: z.string(),
   estimatedTimeOfDelivery: z.string(),
   details: z.object({
     carrier: z.object({
