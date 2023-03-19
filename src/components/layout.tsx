@@ -33,7 +33,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
           )}
         </nav>
       </header>
-      <main className="mt-5 flex min-h-screen flex-col items-center justify-start">
+      <main className="mt-5 flex min-h-screen flex-col justify-start">
         {children}
       </main>
     </div>
