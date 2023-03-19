@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { env } from "~/env.mjs";
 import { httpGet } from "~/server/utils/http-utils";
-import { Shipment, Shipments } from "~/components/models/shipment";
+import { Shipments } from "~/components/models/shipment";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
@@ -18,13 +18,18 @@ export const shipmentRouter = createTRPCRouter({
           }
         );
 
-        console.log("data", data);
+        if (!data) return;
 
-        if (!data?.shipments?.length) {
-          throw new Error("No shipments found.");
-        }
-        console.log("DATA", data);
-        return data?.shipments[0] as Shipment;
+        return (
+          (data?.shipments[0] && {
+            ...data.shipments[0],
+            events: data.shipments[0].events.map((event) => ({
+              ...event,
+              location: event.location.address.addressLocality,
+            })),
+          }) ||
+          undefined
+        );
       } catch (error) {
         throw new TRPCError({
           code: "NOT_FOUND",
@@ -38,6 +43,13 @@ export const shipmentRouter = createTRPCRouter({
     return ctx.prisma.shipment.findMany({
       orderBy: {
         estimatedDeliveryDate: "desc",
+      },
+      include: {
+        events: {
+          orderBy: {
+            timestamp: "asc",
+          },
+        },
       },
     });
   }),
