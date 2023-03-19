@@ -59,15 +59,31 @@ export const shipmentRouter = createTRPCRouter({
         trackingNumber: z.string(),
         status: z.string(),
         estimatedDeliveryDate: z.string(),
+        events: z.array(
+          z.object({
+            timestamp: z.string(),
+            description: z.string(),
+            location: z.string(),
+          })
+        ),
       })
     )
-    .mutation(({ ctx, input }) => {
-      return ctx.prisma.shipment.create({
+    .mutation(async ({ ctx, input }) => {
+      const events = input?.events?.map((event) => ({
+        description: event.description,
+        timestamp: event.timestamp,
+        location: event?.location,
+      }));
+
+      await ctx.prisma.shipment.create({
         data: {
           status: input.status,
           trackingNumber: input.trackingNumber,
           estimatedDeliveryDate: input.estimatedDeliveryDate,
           userId: ctx.session.user.id,
+          events: {
+            create: events,
+          },
         },
       });
     }),
