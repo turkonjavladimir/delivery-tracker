@@ -8,11 +8,7 @@ type TimelineItemProps = {
 
 export type EventProps = {
   timestamp: string;
-  location: {
-    address: {
-      addressLocality: string;
-    };
-  };
+  location: string;
   description: string;
 };
 
@@ -46,7 +42,7 @@ const Timeline = ({ events }: TimelineProps) => {
         <TimelineItem
           key={index}
           date={event?.timestamp}
-          location={event?.location?.address?.addressLocality}
+          location={event?.location}
           description={event?.description}
         />
       ))}
