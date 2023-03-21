@@ -70,6 +70,8 @@ model Shipment {
     id                    String  @id @default(cuid())
     trackingNumber        String  @unique
     status                String
+    destination           String?
+    origin                String?
     estimatedDeliveryDate String?
     userId                String?
     user                  User?   @relation(fields: [userId], references: [id])
