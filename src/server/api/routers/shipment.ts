@@ -34,7 +34,6 @@ export const shipmentRouter = createTRPCRouter({
         throw new TRPCError({
           code: "NOT_FOUND",
           message: "No shipments found.",
-          // optional: pass the original error to retain stack trace
           cause: error,
         });
       }
@@ -53,6 +52,22 @@ export const shipmentRouter = createTRPCRouter({
       },
     });
   }),
+  getOne: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(({ ctx, input }) => {
+      return ctx.prisma.shipment.findUnique({
+        where: {
+          id: input.id,
+        },
+        include: {
+          events: {
+            orderBy: {
+              timestamp: "desc",
+            },
+          },
+        },
+      });
+    }),
   create: protectedProcedure
     .input(
       z.object({
