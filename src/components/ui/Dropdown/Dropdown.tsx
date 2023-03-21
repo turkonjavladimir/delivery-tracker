@@ -42,16 +42,16 @@ export const MenuItem = ({
 }) => {
   return (
     <Menu.Item
-      disabled={isLoading}
+      disabled={isLoading || false}
       as="button"
       onClick={onClick}
       className={`${
-        isDisabled && "cursor-not-allowed opacity-50 hover:bg-transparent"
+        isDisabled ? "cursor-not-allowed opacity-50 hover:bg-transparent" : ""
       } flex w-full items-center gap-3 rounded-md px-2 py-2 text-sm text-gray-700 transition-colors hover:bg-gray-100 dark:text-neutral-300 dark:hover:bg-neutral-700`}
     >
       {icon}
       {text}
-      {isLoading && <LoadingSpinner />}
+      {isLoading ? <LoadingSpinner /> : null}
     </Menu.Item>
   );
 };
