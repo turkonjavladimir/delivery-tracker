@@ -180,7 +180,9 @@ const Home: NextPage = () => {
             </span>
 
             {isLoadingShipments && (
-              <div className="mt-2">{<CardSkeleton />}</div>
+              <div className="mt-2">
+                <CardSkeleton />
+              </div>
             )}
 
             {allShipments?.length === 0 ||
