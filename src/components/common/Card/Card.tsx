@@ -23,6 +23,8 @@ const Card = ({ id, status = "", trackingNumber = "" }: CardProps) => {
 
   const isDisabled = deleteShipment?.isLoading;
 
+  if (!id) return null;
+
   return (
     <Link href={`/shipment/${id}`}>
       <div className="mt-2 flex flex-col rounded-md bg-white p-3 shadow-sm transition-colors md:hover:bg-indigo-50">

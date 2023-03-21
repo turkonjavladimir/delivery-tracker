@@ -1,5 +1,5 @@
 import { signIn, signOut, useSession } from "next-auth/react";
-import { ReactNode } from "react";
+import { type ReactNode } from "react";
 
 import Avatar from "~/components/common/Avatar";
 import { Button } from "./common";
@@ -27,12 +27,14 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 <div className="mx-1 py-1">
                   <MenuItem text="Profile" />
                   <MenuItem text="Settings" />
-                  <MenuItem text="Sign out" onClick={() => signOut()} />
+                  <MenuItem text="Sign out" onClick={() => void signOut()} />
                 </div>
               </Dropdown>
             )}
 
-            {!sessionData && <Button onClick={() => signIn()}>Sign in</Button>}
+            {!sessionData && (
+              <Button onClick={() => void signIn()}>Sign in</Button>
+            )}
           </nav>
         </header>
         <main className="mt-5 flex min-h-screen flex-col justify-start">
