@@ -2,7 +2,8 @@ import { z } from "zod";
 
 import { env } from "~/env.mjs";
 import { httpGet } from "~/server/utils/http-utils";
-import { Shipments } from "~/components/models/shipment";
+
+import { type Shipments } from "~/components/models/shipment";
 import { createTRPCRouter, protectedProcedure, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 
