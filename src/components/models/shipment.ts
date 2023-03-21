@@ -36,9 +36,7 @@ const shipmentValidator = z.object({
   service: z.string(),
   estimatedTimeOfDelivery: z.string(),
   details: z.object({
-    carrier: z.object({
-      organizationName: z.string(),
-    }),
+    totalNumberOfPieces: z.number(),
   }),
   events: z.array(EventModel),
 });
