@@ -15,5 +15,9 @@ export const httpGet = async <T>(
     headers,
   })
     .then((res) => res.json())
-    .catch((err) => console.error("🐞", request, err));
+    .then((data) => data as T)
+    .catch((err) => {
+      console.error("🐞", request, err);
+      throw err;
+    });
 };
