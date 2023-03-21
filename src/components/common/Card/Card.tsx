@@ -8,11 +8,11 @@ import { MenuItem } from "~/components/ui/Dropdown/Dropdown";
 
 type CardProps = {
   id?: string;
-  title?: string;
+  status?: string;
   trackingNumber?: string;
 };
 
-const Card = ({ id, title = "", trackingNumber = "" }: CardProps) => {
+const Card = ({ id, status = "", trackingNumber = "" }: CardProps) => {
   const { refetch } = api.shipment.getAll.useQuery();
 
   const deleteShipment = api.shipment.delete.useMutation({
@@ -32,16 +32,27 @@ const Card = ({ id, title = "", trackingNumber = "" }: CardProps) => {
               <Icon name="truck" className="h-10 w-10 text-indigo-500" />
             </span>
 
-            <div className="flex w-full min-w-0 flex-col">
+            <div className="flex w-full min-w-0 flex-col gap-[2px]">
               <div className="flex items-center gap-3">
                 <span className="text=[#27303D] truncate text-sm font-semibold uppercase">
-                  #{trackingNumber}
+                  {trackingNumber}
                 </span>
               </div>
 
-              <span className="mt-2 truncate text-sm uppercase text-gray-400">
-                {title}
+              <span className="truncate text-xs uppercase text-gray-500">
+                {id}
               </span>
+              <div className="flex items-center gap-3">
+                <span
+                  className={`truncate text-xs uppercase ${
+                    status?.toLowerCase() === "delivered"
+                      ? "text-green-700"
+                      : "text-indigo-400"
+                  }`}
+                >
+                  {status}
+                </span>
+              </div>
             </div>
           </div>
 
