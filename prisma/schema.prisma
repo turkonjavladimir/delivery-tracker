@@ -73,6 +73,7 @@ model Shipment {
     destination           String?
     origin                String?
     estimatedDeliveryDate String?
+    deliveryDate          String?
     userId                String?
     user                  User?   @relation(fields: [userId], references: [id])
     archived              Boolean @default(false)

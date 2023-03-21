@@ -61,6 +61,7 @@ export const shipmentRouter = createTRPCRouter({
         estimatedDeliveryDate: z.string(),
         origin: z.string(),
         destination: z.string(),
+        deliveryDate: z.string(),
         events: z.array(
           z.object({
             timestamp: z.string(),
@@ -82,6 +83,7 @@ export const shipmentRouter = createTRPCRouter({
           status: input.status,
           trackingNumber: input.trackingNumber,
           estimatedDeliveryDate: input.estimatedDeliveryDate,
+          deliveryDate: input.deliveryDate,
           userId: ctx.session.user.id,
           destination: input.destination,
           origin: input.origin,
