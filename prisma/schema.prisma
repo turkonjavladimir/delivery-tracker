@@ -73,6 +73,8 @@ model Shipment {
     destination           String?
     origin                String?
     estimatedDeliveryDate String?
+    totalNumberOfPieces   Int?
+    service               String?
     deliveryDate          String?
     userId                String?
     user                  User?   @relation(fields: [userId], references: [id])
