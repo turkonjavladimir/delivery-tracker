@@ -30,11 +30,11 @@ const TimelineItem = ({
       <div className="flex-start flex items-center pt-3">
         <span className="relative -ml-[4.5px] mr-3 flex h-2 w-2">
           {isActive && (
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-orange-400 opacity-75"></span>
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
           )}
           <span
             className={`relative inline-flex h-2 w-2 rounded-full ${
-              isActive ? "bg-orange-400" : "bg-green-500"
+              isActive ? "bg-indigo-400" : "bg-green-500"
             }`}
           ></span>
         </span>
