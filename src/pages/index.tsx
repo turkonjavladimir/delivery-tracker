@@ -14,6 +14,7 @@ import {
   TrackingCardSkeleton,
 } from "~/components/common";
 import { CardSkeleton } from "~/components/common/Card/CardSkeleton";
+import Badge from "~/components/common/Badge";
 
 function stringOrNull(str: unknown) {
   if (typeof str === "string") {
@@ -180,6 +181,7 @@ const Home: NextPage = () => {
               Tracking History
             </span>
           )}
+          <Badge />
 
           {isLoadingShipments && sessionData && (
             <>
