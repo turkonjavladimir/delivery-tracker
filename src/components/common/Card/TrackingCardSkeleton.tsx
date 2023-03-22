@@ -1,4 +1,4 @@
-export const CardSkeleton = () => {
+export const TrackingCardSkeleton = () => {
   return (
     <div className="flex animate-pulse flex-col gap-3 rounded-md bg-white p-4 shadow-sm">
       <div className="flex w-full justify-between">

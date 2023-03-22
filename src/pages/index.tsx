@@ -11,7 +11,7 @@ import {
   Card,
   Timeline,
   Button,
-  CardSkeleton,
+  TrackingCardSkeleton,
 } from "~/components/common";
 
 function stringOrNull(str: unknown) {
@@ -140,7 +140,7 @@ const Home: NextPage = () => {
           onChange={(e) => setTrackingnumber(e.target.value)}
         />
 
-        {isInitialLoading && <CardSkeleton />}
+        {isInitialLoading && <TrackingCardSkeleton />}
 
         {isError && (
           <div className="rounded-md bg-white p-4 shadow-sm">
@@ -180,9 +180,7 @@ const Home: NextPage = () => {
             </span>
 
             {isLoadingShipments && (
-              <div className="mt-2">
-                <CardSkeleton />
-              </div>
+              <div className="mt-2">{/*              <CardSkeleton /> */}</div>
             )}
 
             {allShipments?.length === 0 ||
