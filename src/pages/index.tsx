@@ -13,6 +13,7 @@ import {
   Button,
   TrackingCardSkeleton,
 } from "~/components/common";
+import { CardSkeleton } from "~/components/common/Card/CardSkeleton";
 
 function stringOrNull(str: unknown) {
   if (typeof str === "string") {
@@ -173,26 +174,32 @@ const Home: NextPage = () => {
           </div>
         )}
 
-        {sessionData && (
-          <section className="mb-5">
+        <section className="mb-5">
+          {sessionData && (
             <span className="text-gray-600 dark:text-[#979699]">
               Tracking History
             </span>
+          )}
 
-            {isLoadingShipments && (
-              <div className="mt-2">{/*              <CardSkeleton /> */}</div>
-            )}
+          {isLoadingShipments && sessionData && (
+            <>
+              {Array.from({ length: 5 }).map((_, index) => (
+                <div key={index} className="mt-2">
+                  {<CardSkeleton />}
+                </div>
+              ))}
+            </>
+          )}
 
-            {allShipments?.length === 0 ||
-            (!sessionData && !isLoadingShipments) ? (
-              <div className="flex h-44 items-center justify-center">
-                <span className="text-gray-500">No shipments found</span>
-              </div>
-            ) : (
-              shipmentsList
-            )}
-          </section>
-        )}
+          {allShipments?.length === 0 ||
+          (!sessionData && !isLoadingShipments) ? (
+            <div className="flex h-44 items-center justify-center">
+              <span className="text-gray-500">No shipments found</span>
+            </div>
+          ) : (
+            shipmentsList
+          )}
+        </section>
       </div>
     </>
   );
