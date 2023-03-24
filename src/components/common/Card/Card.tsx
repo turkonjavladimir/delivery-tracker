@@ -44,7 +44,11 @@ const Card = ({ id, status = "", trackingNumber = "" }: CardProps) => {
                   {trackingNumber}
                 </span>
 
-                <Badge variant="rounded" intent={badgeIntent}>
+                <Badge
+                  variant="rounded"
+                  className="uppercase"
+                  intent={badgeIntent}
+                >
                   {status}
                 </Badge>
               </div>
