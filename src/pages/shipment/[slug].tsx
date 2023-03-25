@@ -2,10 +2,26 @@ import Head from "next/head";
 import { type NextPage } from "next";
 import { format } from "date-fns";
 import { useRouter } from "next/router";
+import { motion } from "framer-motion";
 
-import { Timeline } from "~/components/common";
+import { Badge, Timeline } from "~/components/common";
 
 import { api } from "~/utils/api";
+
+const TrackingDetailsItem = ({
+  label,
+  value,
+}: {
+  label: string;
+  value: string | number;
+}) => {
+  return (
+    <div className="flex flex-col">
+      <span className="text-sm text-neutral-500">{label}</span>
+      <span className="text-sm  font-bold">{value}</span>
+    </div>
+  );
+};
 
 const Package: NextPage = () => {
   const router = useRouter();
@@ -32,6 +48,8 @@ const Package: NextPage = () => {
     shipment?.estimatedDeliveryDate as string
   );
 
+  const badgeIntent = shipmentStatus === "Delivered" ? "success" : "primary";
+
   return (
     <>
       <Head>
@@ -41,51 +59,44 @@ const Package: NextPage = () => {
         {isInitialLoading && <div>Loading...</div>}
 
         {shipment && !isInitialLoading && (
-          <>
-            <span className="mb-3 text-gray-600 dark:text-[#979699]">
+          <div>
+            <span className="mb-3 block text-gray-600 dark:text-[#979699]">
               Tracking Details
             </span>
-            <div className="mb-4 flex flex-col gap-3 rounded-lg bg-white p-4 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, translateX: "-20px" }}
+              animate={{ opacity: 1, translateX: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mb-4 flex flex-col gap-3 rounded-lg bg-white p-4 shadow-sm"
+            >
               <div className="grid grid-cols-1 items-baseline gap-3 sm:grid-cols-2 md:grid-cols-3">
-                <div>
-                  <span className="text-sm text-neutral-500">
-                    Tracking Number
-                  </span>
+                <TrackingDetailsItem
+                  label="Tracking Number"
+                  value={shipment?.trackingNumber}
+                />
 
-                  <span className="block text-sm font-bold">
-                    {shipment?.trackingNumber}
-                  </span>
-                </div>
-
-                <div>
-                  <span className="block text-sm text-neutral-500">
-                    {shipmentStatus === "Delivered"
+                <TrackingDetailsItem
+                  label={
+                    shipmentStatus === "Delivered"
                       ? "Delivered"
-                      : "Estimated Delivery Date"}
-                  </span>
-                  <span className="text-sm  font-bold">
-                    {shipmentStatus === "Delivered"
+                      : "Estimated Delivery Date"
+                  }
+                  value={
+                    shipmentStatus === "Delivered"
                       ? format(deliveryDate, "MMMM d, yyyy, h:mm aa")
-                      : format(estimatedDeliveryDate, "MMMM d, yyyy, h:mm aa")}
-                  </span>
-                </div>
+                      : format(estimatedDeliveryDate, "MMMM d, yyyy, h:mm aa")
+                  }
+                />
 
-                <div>
-                  <span className="text-sm text-neutral-500">Service</span>
-                  <span className="block text-sm font-bold">
-                    {shipment?.service}
-                  </span>
-                </div>
+                <TrackingDetailsItem
+                  label="Service"
+                  value={shipment?.service ?? ""}
+                />
 
-                <div>
-                  <span className="text-sm text-neutral-500">
-                    Number Of Pieces
-                  </span>
-
-                  <span className="block text-sm font-bold">
-                    {shipment?.totalNumberOfPieces}
-                  </span>
-                </div>
+                <TrackingDetailsItem
+                  label="Pieces"
+                  value={shipment?.totalNumberOfPieces ?? ""}
+                />
               </div>
 
               <hr />
@@ -102,24 +113,28 @@ const Package: NextPage = () => {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="rounded-lg bg-white p-4 shadow-sm">
+            <motion.div
+              initial={{ opacity: 0, translateX: "-20px" }}
+              animate={{ opacity: 1, translateX: 0 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
+              className="rounded-lg bg-white p-4 shadow-sm"
+            >
               <div className="mb-3 flex flex-row items-baseline justify-between gap-3">
                 <h2 className="text-lg font-bold">History</h2>
-                <div
-                  className={`truncate rounded-full px-2 py-1 text-xs font-bold uppercase ${
-                    shipmentStatus === "Delivered"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-indigo-100 text-indigo-500"
-                  }`}
+                <Badge
+                  size="lg"
+                  variant="rounded"
+                  className="uppercase"
+                  intent={badgeIntent}
                 >
                   {shipmentStatus}
-                </div>
+                </Badge>
               </div>
               <Timeline events={shipment?.events || []} />
-            </div>
-          </>
+            </motion.div>
+          </div>
         )}
       </div>
     </>

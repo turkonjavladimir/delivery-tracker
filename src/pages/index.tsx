@@ -1,5 +1,6 @@
 import Head from "next/head";
 import { type NextPage } from "next";
+import { AnimatePresence, motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -14,7 +15,6 @@ import {
   TrackingCardSkeleton,
 } from "~/components/common";
 import { CardSkeleton } from "~/components/common/Card/CardSkeleton";
-import Badge from "~/components/common/Badge";
 
 function stringOrNull(str: unknown) {
   if (typeof str === "string") {
@@ -108,18 +108,26 @@ const Home: NextPage = () => {
     setTrackingnumber(query);
   }, [query]);
 
-  const shipmentsList = allShipments?.map((shipment) => {
+  const shipmentsList = allShipments?.map((shipment, i) => {
     const status =
       shipment.status.toLocaleLowerCase() === "delivered"
         ? "Delivered"
         : "In Transit";
     return (
-      <Card
-        id={shipment.id}
+      <motion.div
         key={shipment.id}
-        trackingNumber={shipment.trackingNumber}
-        status={status}
-      />
+        initial={{ opacity: 0, translateX: "-20px" }}
+        animate={{ opacity: 1, translateX: 0 }}
+        transition={{ duration: 0.3, delay: i * 0.1 }}
+        exit={{ opacity: 0, translateX: -"20px" }}
+      >
+        <Card
+          id={shipment.id}
+          key={shipment.id}
+          trackingNumber={shipment.trackingNumber}
+          status={status}
+        />
+      </motion.div>
     );
   });
 
@@ -145,13 +153,23 @@ const Home: NextPage = () => {
         {isInitialLoading && <TrackingCardSkeleton />}
 
         {isError && (
-          <div className="rounded-md bg-white p-4 shadow-sm">
+          <motion.div
+            className="rounded-md bg-white p-4 shadow-sm"
+            initial={{ opacity: 0, translateY: "-20px" }}
+            animate={{ opacity: 1, translateY: 0 }}
+            transition={{ duration: 0.3 }}
+          >
             <span className="text-red-500">{error?.message}</span>
-          </div>
+          </motion.div>
         )}
 
         {shipment && (
-          <div className="rounded-lg bg-white p-4 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, translateX: "-20px" }}
+            animate={{ opacity: 1, translateX: 0 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-lg bg-white p-4 shadow-sm"
+          >
             <div className="flex items-center justify-between">
               <div className="flex flex-col">
                 <span className="block text-sm text-gray-600">
@@ -169,39 +187,56 @@ const Home: NextPage = () => {
                 <span>{createShipment?.isLoading ? "Loading" : "Save"}</span>
               </Button>
             </div>
+
             <div className="mt-3 max-h-96 overflow-y-scroll px-1">
               <Timeline events={shipment?.events || []} />
             </div>
-          </div>
+          </motion.div>
         )}
 
-        <section className="mb-5">
-          {sessionData && (
-            <span className="text-gray-600 dark:text-[#979699]">
+        {sessionData && (
+          <section className="mb-5">
+            <motion.span
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="text-gray-600 dark:text-[#979699]"
+            >
               Tracking History
-            </span>
-          )}
-          <Badge />
+            </motion.span>
 
-          {isLoadingShipments && sessionData && (
-            <>
-              {Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="mt-2">
-                  {<CardSkeleton />}
-                </div>
-              ))}
-            </>
-          )}
-
-          {allShipments?.length === 0 ||
-          (!sessionData && !isLoadingShipments) ? (
-            <div className="flex h-44 items-center justify-center">
-              <span className="text-gray-500">No shipments found</span>
-            </div>
-          ) : (
-            shipmentsList
-          )}
-        </section>
+            <AnimatePresence mode="popLayout">
+              {allShipments?.length !== 0 ? (
+                <>
+                  {isLoadingShipments
+                    ? Array.from({ length: 3 }).map((_, index) => (
+                        <motion.div
+                          key={index}
+                          className="mt-2"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ duration: 0.2, delay: index * 0.1 }}
+                          exit={{ opacity: 0 }}
+                        >
+                          {<CardSkeleton />}
+                        </motion.div>
+                      ))
+                    : shipmentsList}
+                </>
+              ) : (
+                <motion.div
+                  className="flex h-44 items-center justify-center"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <span className="text-gray-500">No shipments found</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </section>
+        )}
       </div>
     </>
   );
