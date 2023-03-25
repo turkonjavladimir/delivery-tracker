@@ -1,4 +1,5 @@
 import { format } from "date-fns";
+import { motion } from "framer-motion";
 
 type TimelineItemProps = {
   date: string;
@@ -39,14 +40,33 @@ const TimelineItem = ({
           ></span>
         </span>
 
-        <p className="text-sm text-neutral-400">
+        <motion.p
+          initial={{ opacity: 0, translateX: "-5px" }}
+          transition={{ duration: 0.2 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          className="text-sm text-neutral-400"
+        >
           {format(newDate, "MMMM d, yyyy, h:mm aa")}
-        </p>
+        </motion.p>
       </div>
 
       <div className="mt-2 ml-4">
-        <h4 className="mb-1.5 text-sm font-semibold">{description}</h4>
-        <p className="pb-3 text-sm text-neutral-400">{location}</p>
+        <motion.h4
+          initial={{ opacity: 0, translateX: "-5px" }}
+          transition={{ duration: 0.2 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          className="mb-1.5 text-sm font-semibold"
+        >
+          {description}
+        </motion.h4>
+        <motion.p
+          initial={{ opacity: 0, translateX: "-5px" }}
+          transition={{ duration: 0.2 }}
+          whileInView={{ opacity: 1, translateX: 0 }}
+          className="pb-3 text-sm text-neutral-400"
+        >
+          {location}
+        </motion.p>
       </div>
     </li>
   );
