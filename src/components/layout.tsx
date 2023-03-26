@@ -1,5 +1,5 @@
 import { type ReactNode } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 import Avatar from "~/components/common/Avatar";
