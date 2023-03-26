@@ -41,6 +41,9 @@ export const shipmentRouter = createTRPCRouter({
     }),
   getAll: protectedProcedure.query(({ ctx }) => {
     return ctx.prisma.shipment.findMany({
+      where: {
+        userId: ctx.session.user.id,
+      },
       orderBy: {
         estimatedDeliveryDate: "desc",
       },
