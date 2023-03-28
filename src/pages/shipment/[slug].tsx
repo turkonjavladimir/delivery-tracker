@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { Badge, Timeline } from "~/components/common";
 
 import { api } from "~/utils/api";
+import { useSession } from "next-auth/react";
+import AccessDenied from "~/components/access-denied";
 
 const TrackingDetailsItem = ({
   label,
@@ -25,6 +27,7 @@ const TrackingDetailsItem = ({
 
 const Package: NextPage = () => {
   const router = useRouter();
+  const { data: sessionData } = useSession();
 
   const shipmentId =
     typeof router.query.slug === "string" ? router.query.slug : undefined;
@@ -49,6 +52,10 @@ const Package: NextPage = () => {
   );
 
   const badgeIntent = shipmentStatus === "Delivered" ? "success" : "primary";
+
+  if (!sessionData) {
+    return <AccessDenied />;
+  }
 
   return (
     <>
