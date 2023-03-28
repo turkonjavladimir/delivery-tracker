@@ -12,10 +12,7 @@ export default function AccessDenied() {
         </p>
         <button
           className="text-blue-600 underline visited:text-purple-600 hover:text-blue-800"
-          onClick={(e) => {
-            e.preventDefault();
-            signIn();
-          }}
+          onClick={() => void signIn()}
         >
           Sign in
         </button>
