@@ -1,5 +1,11 @@
 // @ts-check
 
+import withBundleAnalyzer from "@next/bundle-analyzer";
+
+const bundleAnalyzer = withBundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /**
  * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation.
  * This is especially useful for Docker builds.
@@ -9,6 +15,7 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
+  swcMinify: true,
   images: {
     remotePatterns: [
       {
@@ -28,4 +35,5 @@ const config = {
     defaultLocale: "en",
   },
 };
-export default config;
+
+export default bundleAnalyzer(config);
