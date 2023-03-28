@@ -68,7 +68,7 @@ model VerificationToken {
 
 model Shipment {
     id                    String  @id @default(cuid())
-    trackingNumber        String  @unique
+    trackingNumber        String
     status                String
     destination           String?
     origin                String?
