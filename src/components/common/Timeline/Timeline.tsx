@@ -1,5 +1,5 @@
 import { format } from "date-fns";
-import { motion } from "framer-motion";
+import { m, LazyMotion, domAnimation } from "framer-motion";
 
 type TimelineItemProps = {
   date: string;
@@ -27,48 +27,47 @@ const TimelineItem = ({
   const newDate = new Date(date);
 
   return (
-    <li>
-      <div className="flex-start flex items-center pt-3">
-        <span className="relative -ml-[4.5px] mr-3 flex h-2 w-2">
-          {isActive && (
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
-          )}
-          <span
-            className={`relative inline-flex h-2 w-2 rounded-full ${
-              isActive ? "bg-indigo-400" : "bg-green-500"
-            }`}
-          ></span>
-        </span>
+    <LazyMotion features={domAnimation}>
+      <li>
+        <div className="flex-start flex items-center pt-3">
+          <span className="relative -ml-[4.5px] mr-3 flex h-2 w-2">
+            {isActive && (
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-indigo-400 opacity-75"></span>
+            )}
+            <span
+              className={`relative inline-flex h-2 w-2 rounded-full ${
+                isActive ? "bg-indigo-400" : "bg-green-500"
+              }`}
+            ></span>
+          </span>
 
-        <motion.p
-          initial={{ opacity: 0, translateX: "-5px" }}
-          transition={{ duration: 0.2 }}
-          whileInView={{ opacity: 1, translateX: 0 }}
-          className="text-sm text-neutral-400"
-        >
-          {format(newDate, "MMMM d, yyyy, h:mm aa")}
-        </motion.p>
-      </div>
+          <m.p
+            initial={{ opacity: 0, translateX: "-5px" }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            className="text-sm text-neutral-400"
+          >
+            {format(newDate, "MMMM d, yyyy, h:mm aa")}
+          </m.p>
+        </div>
 
-      <div className="mt-2 ml-4">
-        <motion.h4
-          initial={{ opacity: 0, translateX: "-5px" }}
-          transition={{ duration: 0.2 }}
-          whileInView={{ opacity: 1, translateX: 0 }}
-          className="mb-1.5 text-sm font-semibold"
-        >
-          {description}
-        </motion.h4>
-        <motion.p
-          initial={{ opacity: 0, translateX: "-5px" }}
-          transition={{ duration: 0.2 }}
-          whileInView={{ opacity: 1, translateX: 0 }}
-          className="pb-3 text-sm text-neutral-400"
-        >
-          {location}
-        </motion.p>
-      </div>
-    </li>
+        <div className="mt-2 ml-4">
+          <m.h4
+            initial={{ opacity: 0, translateX: "-5px" }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            className="mb-1.5 text-sm font-semibold"
+          >
+            {description}
+          </m.h4>
+          <m.p
+            initial={{ opacity: 0, translateX: "-5px" }}
+            whileInView={{ opacity: 1, translateX: 0 }}
+            className="pb-3 text-sm text-neutral-400"
+          >
+            {location}
+          </m.p>
+        </div>
+      </li>
+    </LazyMotion>
   );
 };
 
